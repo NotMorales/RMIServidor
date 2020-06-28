@@ -15,7 +15,8 @@ public class ProductoController extends UnicastRemoteObject implements IProducto
     private final String TABLE = "producto";
     
     public ProductoController() throws RemoteException {
-        dbManager = new DBManager();
+        DBManager db = DB.getInstance();
+        dbManager = db;
     }
     
     @Override

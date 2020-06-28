@@ -101,8 +101,8 @@ public class Venta extends UnicastRemoteObject implements IVenta{
 
     @Override
     public String getString() throws RemoteException {
-        return String.format( "VentaId: %d, Folio: %d, SubTotal: %d, Iva: %d, Total: %d, Fecha: %s", 
-                    ventaId, folio, subTotal, iva, total, fecha );
+        return String.format( "VentaId: %d, Folio: %d, SubTotal: %f, Iva: %f, Total: %f, Fecha: %s, Estado: %d", 
+                    ventaId, folio, subTotal, iva, total, fecha, estado );
     }
     
     public static IVenta fromMap( Map<String, Object> map ) throws RemoteException{

@@ -15,7 +15,8 @@ public class DetalleVentaController extends UnicastRemoteObject implements IDeta
     private final String TABLE = "detalleVenta";
     
     public DetalleVentaController() throws RemoteException {
-        dbManager = new DBManager();
+        DBManager db = DB.getInstance();
+        dbManager = db;
     }
     
     @Override
@@ -95,6 +96,7 @@ public class DetalleVentaController extends UnicastRemoteObject implements IDeta
         Map<String, Object> registro = dbManager.buscarUno(TABLE, where);
         return DetalleVenta.fromMap(registro);
     }
+    
 
     @Override
     public List<IDetalleVenta> find(IDetalleVenta detalleVenta) throws RemoteException {

@@ -15,7 +15,8 @@ public class VentaController extends UnicastRemoteObject implements IVentaContro
     private final String TABLE = "venta";
     
     public VentaController() throws RemoteException {
-        dbManager = new DBManager();
+        DBManager db = DB.getInstance();
+        dbManager = db;
     }
     
     @Override
