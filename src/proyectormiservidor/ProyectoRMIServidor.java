@@ -1,5 +1,6 @@
 package proyectormiservidor;
 
+import Interfaces.IDetalleVentaController;
 import Interfaces.IProductoController;
 import Interfaces.IVentaController;
 import java.net.MalformedURLException;
@@ -18,8 +19,12 @@ public class ProyectoRMIServidor {
             LocateRegistry.createRegistry(1099);
             IProductoController productoController = new ProductoController();
             Naming.rebind("rmi://localhost/ProductoController", (Remote) productoController);
+            
             IVentaController ventaController = new VentaController();
             Naming.rebind("rmi://localhost/VentaController", (Remote) ventaController);
+            
+            IDetalleVentaController detalleController = new DetalleVentaController();
+            Naming.rebind("rmi://localhost/DetalleVentaController", (Remote) detalleController);
             System.out.println("Escuchado...");
         } catch (RemoteException ex) {
             Logger.getLogger(ProyectoRMIServidor.class.getName()).log(Level.SEVERE, null, ex);
