@@ -20,8 +20,18 @@ public class DetalleVentaController extends UnicastRemoteObject implements IDeta
     }
     
     @Override
+    public double getMontoTotal(String[] fechas) throws RemoteException {
+        return dbManager.getMontoTotal(TABLE, fechas);
+    }
+    
+    @Override
     public IDetalleVenta newInstance() throws RemoteException {
         return new DetalleVenta();
+    }
+    
+    @Override
+    public List<Map<String, Object>> getProductosVendidos(String[] fechas) throws RemoteException {
+        return dbManager.getProductosVendidos(fechas);
     }
 
     @Override
@@ -109,5 +119,5 @@ public class DetalleVentaController extends UnicastRemoteObject implements IDeta
         }
         return listaIDetalleVenta;
     }
-    
+  
 }

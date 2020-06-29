@@ -3,6 +3,7 @@ package Interfaces;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
+import java.util.Map;
 
 public interface IDetalleVentaController extends Remote {
     IDetalleVenta newInstance() throws RemoteException;
@@ -13,6 +14,8 @@ public interface IDetalleVentaController extends Remote {
     List<IDetalleVenta> list() throws RemoteException;
     IDetalleVenta findOne(int detalleVentaId) throws RemoteException;
     List<IDetalleVenta> find(IDetalleVenta detalleVenta) throws RemoteException;
+    double getMontoTotal(String[] fechas) throws RemoteException;
+    List< Map<String, Object> > getProductosVendidos(String[] fechas) throws RemoteException;
     
     int ADD_EXITO               = 1;
     int ADD_ID_DUPLICADO        = 2;

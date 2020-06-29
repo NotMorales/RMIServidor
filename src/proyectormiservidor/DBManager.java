@@ -61,6 +61,28 @@ public class DBManager {
         }
     }
     
+    public double getMontoTotal(String tabla, String[] fechas ){
+        String sql = String.format("SELECT SUM(v.total) FROM venta v, %s dv\n" +
+                    "WHERE v.ventaId = dv.ventaId AND v.fecha \n" +
+                    "BETWEEN ", tabla);
+        double monto = 0;
+        for (String fecha : fechas) {
+            sql += String.format("'%s' AND ", fecha);
+        }
+        sql = sql.substring(0, sql.length()-4);
+        
+        try {
+            Statement statement = conexion.createStatement();
+            ResultSet resultset = statement.executeQuery(sql);
+            
+            monto = (Double) resultset.getObject(1);
+        } catch (SQLException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            return monto;
+        }
+    }
+    
     public int getNumVentas(String tabla){
         String sql = String.format("SELECT COUNT(*) AS ventas FROM %s", tabla);
         int numVentas = 0;
@@ -175,6 +197,40 @@ public class DBManager {
     /* LISTAR */
     public List< Map<String, Object> > listar(String tabla ){
         return listar(tabla, null);
+    }
+    
+    public List< Map<String, Object> > getProductosVendidos(String[] fechas){
+        String sql ="SELECT p.nombre, SUM(dv.unidades) AS unidades, v.fecha \n" +
+                    "FROM producto p,detalleVenta dv, venta v\n" +
+                    "WHERE p.productoId = dv.productoId AND \n" +
+                    "v.ventaId = dv.ventaId AND \n" +
+                    "v.fecha BETWEEN ";
+        for (String fecha : fechas) {
+            sql += String.format("'%S' AND ", fecha);
+        }
+        sql = sql.substring(0, sql.length()-4);
+        sql = sql + "GROUP BY v.fecha, p.nombre";
+        
+        List< Map<String, Object> > registros = new ArrayList<>();
+        
+        try {
+            Statement statement = conexion.createStatement();
+            ResultSet resultset = statement.executeQuery(sql);
+            ResultSetMetaData metaData = resultset.getMetaData();
+            final int TOTAL_COLUMNAS = metaData.getColumnCount();
+            
+            while( resultset.next() ){
+                Map<String, Object> registro = new HashMap<>();
+                for (int i = 1; i < TOTAL_COLUMNAS; i++) {
+                    registro.put(metaData.getColumnName(i), resultset.getObject(i));
+                }
+                registros.add( registro );
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            return registros;
+        }
     }
     
     public List< Map<String, Object> > listar(String tabla, Map<String, Object> where){
