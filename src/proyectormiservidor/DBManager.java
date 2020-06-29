@@ -17,7 +17,8 @@ public class DBManager {
     private Connection conexion;
     
     public DBManager(){
-        String url = "jdbc:sqlite:C:\\Users\\Luisa\\OneDrive\\Documentos\\NetBeansProjects\\ProyectoRMIServidor\\db.sql";
+        //String url = "jdbc:sqlite:C:\\Users\\Luisa\\OneDrive\\Documentos\\NetBeansProjects\\ProyectoRMIServidor\\db.sql";
+        String url = "jdbc:sqlite:C:\\Users\\luis2\\Documents\\NetBeansProjects\\RMIServidor\\db.sql";
         try {
             conexion = DriverManager.getConnection(url);
             System.out.println("Conexión a BD exitosa.");
@@ -56,6 +57,38 @@ public class DBManager {
         } catch (SQLException ex) {
             Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
+            return respuesta;
+        }
+    }
+    
+    public int getNumVentas(String tabla){
+        String sql = String.format("SELECT COUNT(*) AS ventas FROM %s", tabla);
+        int numVentas = 0;
+        try {
+            Statement statement = conexion.createStatement();
+            ResultSet resulset = statement.executeQuery(sql);
+            
+            numVentas = (Integer)resulset.getObject(1);
+        } catch (SQLException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            return numVentas;
+        }
+    }
+    
+    public int cancelarVenta( String tabla, int ventaid ){
+        String sql = String.
+                format("UPDATE %s SET estado = 0 WHERE ventaId = %s;",tabla,ventaid);
+        
+        Statement statement;
+        int respuesta = 0;
+        
+        try {
+            statement = conexion.createStatement();
+            respuesta = statement.executeUpdate(sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
             return respuesta;
         }
     }

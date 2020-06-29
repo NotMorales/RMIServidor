@@ -20,6 +20,25 @@ public class VentaController extends UnicastRemoteObject implements IVentaContro
     }
     
     @Override
+    public int getNumVentas() throws RemoteException{
+        return dbManager.getNumVentas(TABLE);
+    }
+    
+    @Override
+    public int cancelarVenta(int ventaid) throws RemoteException {
+        if(ventaid == 0){
+            return UPDATE_ID_NULO;
+        }
+        //Verificar que existe persona con ID recibido
+        IVenta ventaEncontrado = findOne(ventaid);
+        if(ventaEncontrado.getVentaId() == 0){
+            return UPDATE_ID_INEXISTE;
+        }
+        int respuesta = dbManager.cancelarVenta(TABLE, ventaid);
+        return (respuesta > 0) ? UPDATE_EXITO :  UPDATE_SIN_EXITO;
+    }
+    
+    @Override
     public IVenta newInstance() throws RemoteException {
         return new Venta();
     }
@@ -90,9 +109,9 @@ public class VentaController extends UnicastRemoteObject implements IVentaContro
     }
 
     @Override
-    public IVenta findOne(int ventaId) throws RemoteException {
+    public IVenta findOne(int ventaid) throws RemoteException {
         Map<String, Object> where = new HashMap<>();
-        where.put("ventaId", ventaId);
+        where.put("ventaId", ventaid);
         Map<String, Object> registro = dbManager.buscarUno(TABLE, where);
         return Venta.fromMap(registro);
     }
