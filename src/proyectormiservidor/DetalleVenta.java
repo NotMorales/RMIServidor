@@ -90,7 +90,7 @@ public class DetalleVenta extends UnicastRemoteObject implements IDetalleVenta{
 
     @Override
     public String getString() throws RemoteException {
-        return String.format( "Detalle Venta: %d, Venta: %d, Producto: %d, Unidades: %d, Total: %d", 
+        return String.format( "Detalle Venta: %d, Venta: %d, Producto: %d, Unidades: %d, Total: %f", 
                     detalleVentaId, ventaId, productoId, unidades, total );
     }
     

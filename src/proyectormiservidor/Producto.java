@@ -76,7 +76,7 @@ public class Producto extends UnicastRemoteObject implements IProducto{
 
     @Override
     public String getString() throws RemoteException {
-        return String.format( "ProductoId: %d, Codigo: %d, Marca: %s, Nombre: %s, Precio: %d", 
+        return String.format( "ProductoId: %d, Codigo: %d, Marca: %s, Nombre: %s, Precio: %f", 
                     productoId, codigo, marca, nombre, precio );
     }
     

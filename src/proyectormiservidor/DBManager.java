@@ -17,8 +17,8 @@ public class DBManager {
     private Connection conexion;
     
     public DBManager(){
-        //String url = "jdbc:sqlite:C:\\Users\\Luisa\\OneDrive\\Documentos\\NetBeansProjects\\ProyectoRMIServidor\\db.sql";
-        String url = "jdbc:sqlite:C:\\Users\\luis2\\Documents\\NetBeansProjects\\RMIServidor\\db.sql";
+        String url = "jdbc:sqlite:C:\\Users\\Luisa\\OneDrive\\Documentos\\NetBeansProjects\\RMIServidor30\\db.sql";
+        //String url = "jdbc:sqlite:C:\\Users\\luis2\\Documents\\NetBeansProjects\\RMIServidor\\db.sql";
         try {
             conexion = DriverManager.getConnection(url);
             System.out.println("Conexión a BD exitosa.");
