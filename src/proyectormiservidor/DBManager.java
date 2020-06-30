@@ -221,7 +221,7 @@ public class DBManager {
             
             while( resultset.next() ){
                 Map<String, Object> registro = new HashMap<>();
-                for (int i = 1; i < TOTAL_COLUMNAS; i++) {
+                for (int i = 1; i <= TOTAL_COLUMNAS; i++) {
                     registro.put(metaData.getColumnName(i), resultset.getObject(i));
                 }
                 registros.add( registro );
@@ -261,7 +261,7 @@ public class DBManager {
             // Recuperar registros
             while( resultSet.next() ){
                 Map<String, Object> registro = new HashMap<>();
-                for(int i=1; i<=TOTAL_COLUMNAS; i++){
+                for(int i=1; i<= TOTAL_COLUMNAS; i++){
                     registro.put( metaData.getColumnName(i), resultSet.getObject(i) );
                 }
                 registros.add( registro );
