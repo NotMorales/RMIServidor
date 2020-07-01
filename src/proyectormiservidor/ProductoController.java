@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 public class ProductoController extends UnicastRemoteObject implements IProductoController{
 
@@ -45,9 +46,15 @@ public class ProductoController extends UnicastRemoteObject implements IProducto
         }
         //Verificar que existe persona con ID recibido
         IProducto productoEncontrado = findOne(producto.getProductoId());
-        IProducto productoEncontrado2 = findOneCodigo(producto.getCodigo());
-        boolean existe2 = productoEncontrado2.getCodigo() != 0;
-        if(existe2){
+        List<IProducto> listProductos;
+        IProducto productoTem = new Producto();
+        productoTem.setCodigo( producto.getCodigo() );
+        listProductos = find( productoTem );
+        int cont=0;
+        for( IProducto productoTem2 : listProductos ){
+                cont++;
+        }
+        if(cont > 1){
             return UPDATE_SIN_EXITO;
         }
         if(productoEncontrado.getProductoId()== 0){
