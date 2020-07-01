@@ -28,7 +28,9 @@ public class ProductoController extends UnicastRemoteObject implements IProducto
     public int add(IProducto producto) throws RemoteException {
         IProducto productoEncontrado = findOne(producto.getProductoId());
         boolean existe = productoEncontrado.getProductoId()!= 0;
-        if(existe){
+        IProducto productoEncontrado2 = findOneCodigo(producto.getCodigo());
+        boolean existe2 = productoEncontrado2.getCodigo()!= 0;
+        if(existe || existe2){
             return ADD_ID_DUPLICADO;
         }
         Map<String, Object> datos = Producto.toMap(producto);
@@ -43,6 +45,11 @@ public class ProductoController extends UnicastRemoteObject implements IProducto
         }
         //Verificar que existe persona con ID recibido
         IProducto productoEncontrado = findOne(producto.getProductoId());
+        IProducto productoEncontrado2 = findOneCodigo(producto.getCodigo());
+        boolean existe2 = productoEncontrado2.getCodigo() != 0;
+        if(existe2){
+            return UPDATE_SIN_EXITO;
+        }
         if(productoEncontrado.getProductoId()== 0){
             return UPDATE_ID_INEXISTE;
         }
@@ -107,6 +114,14 @@ public class ProductoController extends UnicastRemoteObject implements IProducto
             listaIProducto.add(productoTemp);
         }
         return listaIProducto;
+    }
+
+    @Override
+    public IProducto findOneCodigo(int codigo) throws RemoteException {
+        Map<String, Object> where = new HashMap<>();
+        where.put("codigo", codigo);
+        Map<String, Object> registro = dbManager.buscarUno(TABLE, where);
+        return Producto.fromMap(registro);
     }
     
 }

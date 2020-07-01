@@ -12,6 +12,7 @@ public interface IProductoController extends Remote {
     int delete(int productoId) throws RemoteException;
     List<IProducto> list() throws RemoteException;
     IProducto findOne(int productoId) throws RemoteException;
+    IProducto findOneCodigo(int codigo) throws RemoteException;
     List<IProducto> find(IProducto producto) throws RemoteException;
     
     int ADD_EXITO               = 1;
